@@ -54,12 +54,31 @@ export default function Article({ data }: Props) {
           height={data.thumbnail?.height}
         />
       </picture>
-      <div
-        className={styles.content}
-        dangerouslySetInnerHTML={{
-          __html: `${formatRichText(data.content)}`,
-        }}
-      />
+      {data.content.map((section, index) => {
+        if (section.fieldId === 'body') {
+          return (
+            <div
+              key={index}
+              className={styles.content}
+              dangerouslySetInnerHTML={{
+                __html: formatRichText(section.body),
+              }}
+            />
+          );
+        } else if (section.fieldId === 'link') {
+          return (
+            <div
+              key={index}
+              className={styles.content}
+              dangerouslySetInnerHTML={{
+                __html: section.link,
+              }}
+            />
+          );
+        } else {
+          return null;
+        }
+      })}
       <Profile writer={data.writer} />
     </main>
   );
