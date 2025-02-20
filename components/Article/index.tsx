@@ -70,13 +70,13 @@ export default function Article({ data }: Props) {
               }}
             />
           );
-        } else if (section.fieldId === 'link') {
+        } else if (section.fieldId === 'html') {
           return (
             <div
               key={index}
               className={styles.content}
               dangerouslySetInnerHTML={{
-                __html: section.link || '',
+                __html: formatRichText(section.html || ''),
               }}
             />
           );
