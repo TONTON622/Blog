@@ -25,7 +25,7 @@ export type Writer = {
 export type Blog = {
   title: string;
   description: string;
-  content: string;
+  content: Array<{ fieldId: string; [key: string]: string }>;
   thumbnail?: MicroCMSImage;
   tags?: Tag[];
   writer?: Writer;

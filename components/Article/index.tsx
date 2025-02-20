@@ -1,15 +1,20 @@
 import { formatRichText } from '@/libs/utils';
-import { type Article } from '@/libs/microcms';
+import { type Blog } from '@/libs/microcms';
 import PublishedDate from '../Date';
 import styles from './index.module.css';
 import TagList from '../TagList';
 import Profile from '../Profile';
 
 type Props = {
-  data: Article;
+  data: Blog;
 };
 
 export default function Article({ data }: Props) {
+  // data.contentが配列であることを確認
+  if (!Array.isArray(data.content)) {
+    return <div>Content is not available</div>;
+  }
+
   return (
     <main className={styles.main}>
       <h1 className={styles.title}>{data.title}</h1>
@@ -61,7 +66,7 @@ export default function Article({ data }: Props) {
               key={index}
               className={styles.content}
               dangerouslySetInnerHTML={{
-                __html: formatRichText(section.body),
+                __html: formatRichText(section.body || ''),
               }}
             />
           );
@@ -71,7 +76,7 @@ export default function Article({ data }: Props) {
               key={index}
               className={styles.content}
               dangerouslySetInnerHTML={{
-                __html: section.link,
+                __html: section.link || '',
               }}
             />
           );
